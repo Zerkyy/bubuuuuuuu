@@ -67,11 +67,26 @@ h1 em{font-style:normal;color:var(--rose)}
 
 footer{text-align:center;padding:45px 20px 65px;color:#906b76;font-size:12px}.footer-heart{color:var(--rose);font-size:18px}
 
-.confetti{position:fixed;z-index:50;pointer-events:none;font-size:20px;animation:confetti 1.7s ease-out forwards}@keyframes confetti{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--x),var(--y)) rotate(600deg);opacity:0}}
+.wheel-container{padding:40px;text-align:center}
+.wheel-wrapper{position:relative;margin:0 auto 30px;width:280px;height:280px}
+.wheel{width:100%;height:100%;border-radius:50%;background:conic-gradient(#ff7f96 0deg 45deg,#ffb36b 45deg 90deg,#dca4f2 90deg 135deg,#7fc8d8 135deg 180deg,#f28aa8 180deg 225deg,#f5cf67 225deg 270deg,#9bd3a7 270deg 315deg,#f08c6d 315deg 360deg);box-shadow:0 0 20px rgba(232,93,117,.3),inset -4px -4px 8px rgba(0,0,0,.1);border:3px solid #fff;position:relative;transition:transform 0.1s}
+.wheel::before{content:"";position:absolute;width:12px;height:12px;background:#fff;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;box-shadow:0 0 8px rgba(0,0,0,.2)}
+.wheel-pointer{position:absolute;top:-15px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:20px solid var(--rose);z-index:10;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
+.wheel-labels{position:absolute;width:100%;height:100%;font-weight:700;font-size:11px;color:#fff}
+.wheel-label{position:absolute;transform-origin:140px 140px;width:140px;height:140px;display:flex;align-items:center;justify-content:center;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.wheel-result{margin-top:25px;font-size:18px;font-weight:700;color:var(--rose);min-height:50px;display:flex;align-items:center;justify-content:center;animation:resultPop 0.5s ease}
+@keyframes resultPop{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+.party-card{padding:50px;text-align:center;min-height:200px;position:relative;overflow:hidden}
+.party-area{position:relative;height:200px;background:linear-gradient(135deg,rgba(232,93,117,.1),rgba(255,179,107,.1));border-radius:20px;margin-bottom:25px}
+.party-emoji{position:absolute;font-size:40px;animation:partyFloat 2s ease-in-out infinite}
+@keyframes partyFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(10deg)}}
+
+.confetti{position:fixed;z-index:50;pointer-events:none;font-size:20px;animation:confetti 1.7s ease-out forwards}
+@keyframes confetti{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--x),var(--y)) rotate(600deg);opacity:0}}
 
 @media(max-width:760px){
  nav{padding-left:14px}.navlinks a{display:none}.navlinks a:last-child{display:block}
- section{padding:85px 0}.reasons,.game-grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.photo:nth-child(1){grid-column:span 2;min-height:420px}.photo{min-height:240px}.letter{padding:27px}.letter h2{font-size:37px}.balloon{width:60px;height:76px}.balloon-stage{height:390px}
+ section{padding:85px 0}.reasons,.game-grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.photo:nth-child(1){grid-column:span 2;min-height:420px}.photo{min-height:240px}.letter{padding:27px}.letter h2{font-size:37px}.balloon{width:60px;height:76px}.balloon-stage{height:390px}.wheel-wrapper{width:220px;height:220px}.wheel::before{width:10px;height:10px}
 }
 </style>
 </head>
@@ -80,13 +95,19 @@ footer{text-align:center;padding:45px 20px 65px;color:#906b76;font-size:12px}.fo
 <nav>
   <a class="brand" href="#top">for <span>Khushboo</span> ♡</a>
   <div class="navlinks">
-    <a href="#memories">memories</a><a href="#games">games</a><a href="#letter">letter</a>
+    <a href="#memories">memories</a><a href="#games">games</a><a href="#wheel">wheel</a><a href="#party">party</a><a href="#letter">letter</a>
   </div>
 </nav>
 
 <main id="top">
 <section class="hero">
   <div class="floating-heart h1">♡</div><div class="floating-heart h2">♥</div><div class="floating-heart h3">♡</div><div class="floating-heart h4">♥</div>
+  <div class="floating-heart" style="left:15%;top:15%;animation-delay:0.5s">💗</div>
+  <div class="floating-heart" style="right:15%;top:45%;animation-delay:1s">💕</div>
+  <div class="floating-heart" style="left:25%;bottom:25%;animation-delay:1.5s">♡</div>
+  <div class="floating-heart" style="right:25%;top:60%;animation-delay:2.5s">❤️</div>
+  <div class="floating-heart" style="left:5%;bottom:35%;animation-delay:0.75s">💖</div>
+  <div class="floating-heart" style="right:8%;bottom:20%;animation-delay:3s">♥</div>
   <div class="hero-inner">
     <div class="kicker">02 SEPTEMBER • BIRTHDAY GIRL DETECTED ✨</div>
     <h1>Happy Birthday,<br><em>Khushboo.</em></h1>
@@ -181,6 +202,32 @@ Because I do.
 
 Happy Birthday, Bubu. ❤️</div>
     <div class="signature">— from the person who made you this tiny internet universe ♡</div>
+  </div>
+</section>
+
+<section id="wheel">
+  <div class="section-head">
+    <div><h2>Spin the Wheel of Love.</h2></div>
+    <p>Spin this magical wheel and let destiny decide what happens next! 💕</p>
+  </div>
+  <div class="card wheel-container">
+    <div class="wheel-wrapper">
+      <div class="wheel" id="wheelCanvas"></div>
+      <div class="wheel-pointer">▼</div>
+    </div>
+    <button class="btn btn-primary" id="spinBtn" onclick="spinTheWheel()">SPIN THE WHEEL 🎡</button>
+    <div class="wheel-result" id="wheelResult"></div>
+  </div>
+</section>
+
+<section id="party">
+  <div class="section-head">
+    <div><h2>🎉 Party Mode! 🎉</h2></div>
+    <p>Let the celebration begin! Press the button and watch the magic happen.</p>
+  </div>
+  <div class="card party-card">
+    <div class="party-area" id="partyArea"></div>
+    <button class="btn btn-primary" onclick="partyMode()">THROW A PARTY 🎊</button>
   </div>
 </section>
 
@@ -309,6 +356,61 @@ function zoomPhoto(el){
  modal.appendChild(big);modal.onclick=()=>modal.remove();document.body.appendChild(modal);
 }
 window.addEventListener("scroll",()=>{const h=document.documentElement.scrollHeight-innerHeight;document.getElementById("progress").style.width=(scrollY/h*100)+"%"});
+
+const wheelOptions=[
+ "An unexpected kiss 💋",
+ "Netflix and cuddle 🍿",
+ "Adventure time! 🗺️",
+ "Breakfast in bed 🥞",
+ "Stargazing together ⭐",
+ "Dance like nobody is watching 💃",
+ "Extra love & hugs 🫂",
+ "Candlelit dinner 🕯️"
+];
+let wheelRotation=0, isSpinning=false;
+function spinTheWheel(){
+ if(isSpinning)return;
+ isSpinning=true;
+ const spinBtn=document.getElementById("spinBtn");
+ spinBtn.disabled=true;
+ const spins=Math.random()*8+8;
+ const extraRotation=Math.random()*360;
+ wheelRotation=spins*360+extraRotation;
+ const wheel=document.getElementById("wheelCanvas");
+ wheel.style.transform=`rotate(${wheelRotation}deg)`;
+ setTimeout(()=>{
+  const normalizedRotation=(360-(wheelRotation%360))%360;
+  const selectedIndex=Math.floor((normalizedRotation+22.5)/45)%8;
+  document.getElementById("wheelResult").textContent=wheelOptions[selectedIndex];
+  isSpinning=false;
+  spinBtn.disabled=false;
+ },3500);
+}
+const wheel=document.getElementById("wheelCanvas");
+wheel.innerHTML=wheelOptions.map((opt,i)=>`<div class="wheel-label" style="transform:rotate(${i*45}deg) translateY(-70px)">${opt}</div>`).join("");
+
+function partyMode(){
+ const area=document.getElementById("partyArea");
+ area.innerHTML="";
+ const emojis=["🎉","🎊","🎈","💕","✨","🎁","💗","🌟"];
+ for(let i=0;i<20;i++){
+  const emoji=document.createElement("div");
+  emoji.className="party-emoji";
+  emoji.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  emoji.style.left=Math.random()*90+"%";
+  emoji.style.animationDelay=(Math.random()*2)+"s";
+  area.appendChild(emoji);
+ }
+ toast("🎊 PARTY TIME! You deserve all the celebrations! 🎉");
+ for(let i=0;i<40;i++){
+  const c=document.createElement("div");c.className="confetti";
+  c.textContent=["🎉","💕","✨","🎀","💗"][Math.floor(Math.random()*5)];
+  c.style.left="50%";c.style.top="50%";
+  c.style.setProperty("--x",(Math.random()*800-400)+"px");
+  c.style.setProperty("--y",(Math.random()*700-350)+"px");
+  document.body.appendChild(c);setTimeout(()=>c.remove(),1800);
+ }
+}
 </script>
 </body>
 </html>
