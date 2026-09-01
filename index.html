@@ -78,10 +78,12 @@ footer{text-align:center;padding:45px 20px 65px;color:#906b76;font-size:12px}.fo
 #spinBtn:disabled{opacity:0.6;cursor:not-allowed}
 .wheel-result{margin-top:25px;font-size:18px;font-weight:700;color:var(--rose);min-height:50px;display:flex;align-items:center;justify-content:center;animation:resultPop 0.5s ease}
 @keyframes resultPop{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
-.party-card{padding:50px;text-align:center;min-height:200px;position:relative;overflow:hidden}
-.party-area{position:relative;height:200px;background:linear-gradient(135deg,rgba(232,93,117,.1),rgba(255,179,107,.1));border-radius:20px;margin-bottom:25px}
-.party-emoji{position:absolute;font-size:40px;animation:partyFloat 2s ease-in-out infinite}
-@keyframes partyFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(10deg)}}
+.party-card{padding:50px 30px;text-align:center;min-height:300px;position:relative;overflow:visible}
+.party-area{position:relative;height:250px;background:linear-gradient(135deg,rgba(232,93,117,.15),rgba(255,179,107,.15),rgba(220,164,242,.1));border-radius:20px;margin-bottom:30px;box-shadow:inset 0 0 30px rgba(232,93,117,.1)}
+.party-emoji{position:absolute;font-size:36px;animation:partyFloat 2s ease-in-out infinite;user-select:none}
+.party-text{position:fixed;font-size:48px;font-weight:800;color:var(--rose);pointer-events:none;animation:partyTextPop 1.5s ease-out forwards}
+@keyframes partyFloat{0%,100%{transform:translateY(0) rotate(0deg);opacity:0.8}50%{transform:translateY(-40px) rotate(15deg);opacity:1}}
+@keyframes partyTextPop{0%{transform:scale(0) rotate(-20deg);opacity:1}100%{transform:scale(0);opacity:0}}
 
 .confetti{position:fixed;z-index:50;pointer-events:none;font-size:20px;animation:confetti 1.7s ease-out forwards}
 @keyframes confetti{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--x),var(--y)) rotate(600deg);opacity:0}}
@@ -402,24 +404,55 @@ function spinTheWheel(){
 function partyMode(){
  const area=document.getElementById("partyArea");
  area.innerHTML="";
- const emojis=["🎉","🎊","🎈","💕","✨","🎁","💗","🌟"];
- for(let i=0;i<20;i++){
+ 
+ // Multiple rounds of emojis for longer celebration
+ const emojis=["🎉","🎊","🎈","💕","✨","🎁","💗","🌟","🎀","💖","🎆","🎇"];
+ 
+ // Add floating emojis in the party area
+ for(let i=0;i<30;i++){
   const emoji=document.createElement("div");
   emoji.className="party-emoji";
   emoji.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-  emoji.style.left=Math.random()*90+"%";
-  emoji.style.animationDelay=(Math.random()*2)+"s";
+  emoji.style.left=Math.random()*85+"%";
+  emoji.style.fontSize=(Math.random()*30+25)+"px";
+  emoji.style.animationDelay=(Math.random()*3)+"s";
+  emoji.style.animationDuration=(2+Math.random()*2)+"s";
   area.appendChild(emoji);
  }
- toast("🎊 PARTY TIME! You deserve all the celebrations! 🎉");
- for(let i=0;i<40;i++){
-  const c=document.createElement("div");c.className="confetti";
-  c.textContent=["🎉","💕","✨","🎀","💗"][Math.floor(Math.random()*5)];
-  c.style.left="50%";c.style.top="50%";
-  c.style.setProperty("--x",(Math.random()*800-400)+"px");
-  c.style.setProperty("--y",(Math.random()*700-350)+"px");
-  document.body.appendChild(c);setTimeout(()=>c.remove(),1800);
+ 
+ // Massive confetti explosion
+ for(let i=0;i<100;i++){
+  const c=document.createElement("div");
+  c.className="confetti";
+  c.textContent=["🎉","💕","✨","🎀","💗","🎊","🎁","🌟"][Math.floor(Math.random()*8)];
+  c.style.left=Math.random()*100+"%";
+  c.style.top="-20px";
+  c.style.setProperty("--x",(Math.random()*1200-600)+"px");
+  c.style.setProperty("--y",(Math.random()*800-100)+"px");
+  c.style.fontSize=(Math.random()*30+15)+"px";
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),2000);
  }
+ 
+ // Floating text that pops up
+ const messages=["WOOHOO!","YES YES YES!","HAPPYYY!","CELEBRATE!","LOVE YOU!","🎉🎉🎉"];
+ for(let i=0;i<8;i++){
+  setTimeout(()=>{
+   const txt=document.createElement("div");
+   txt.className="party-text";
+   txt.textContent=messages[Math.floor(Math.random()*messages.length)];
+   txt.style.left=Math.random()*80+10+"%";
+   txt.style.top=Math.random()*60+20+"%";
+   document.body.appendChild(txt);
+   setTimeout(()=>txt.remove(),1500);
+  },i*200);
+ }
+ 
+ // Main celebration message
+ toast("🎊🎉 PARTY TIME! This is YOUR moment to shine! 💕🎉🎊");
+ 
+ // Additional celebrate effect
+ setTimeout(()=>celebrate(),500);
 }
 </script>
 </body>
