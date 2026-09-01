@@ -70,7 +70,8 @@ footer{text-align:center;padding:45px 20px 65px;color:#906b76;font-size:12px}.fo
 
 .wheel-container{padding:40px;text-align:center}
 .wheel-wrapper{position:relative;margin:0 auto 25px;width:320px;height:320px}
-.wheel-svg{filter:drop-shadow(0 0 30px rgba(232,93,117,.4));transition:transform 0.05s linear}
+.wheel-svg{filter:drop-shadow(0 0 30px rgba(232,93,117,.4));transition:transform 4s cubic-bezier(0.25,0.46,0.45,0.94)}
+.wheel-svg.spinning{transition:transform 3.5s cubic-bezier(0.17,0.67,0.12,0.98)}
 .wheel-pointer{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:25px solid var(--rose);z-index:20;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
 .wheel-legend{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:15px auto;max-width:400px;font-size:12px;line-height:1.4;color:#555}
 .wheel-legend-item{display:flex;align-items:center;gap:8px;padding:6px;background:#fff;border-radius:8px;border:1px solid rgba(113,57,75,.1)}
@@ -442,6 +443,8 @@ function spinWheel(){
  spinBtn.textContent="Spinning...";
  
  const svg=document.getElementById("wheelSvg");
+ svg.classList.add("spinning");
+ 
  const randomSpins=Math.floor(Math.random()*5)+5;
  const randomDegree=Math.random()*360;
  const finalRotation=randomSpins*360+randomDegree;
@@ -457,6 +460,7 @@ function spinWheel(){
   toast(wheelOptions[selectedIndex]);
   
   isSpinning=false;
+  svg.classList.remove("spinning");
   spinBtn.disabled=false;
   spinBtn.textContent="SPIN THE WHEEL 🎡";
  },3500);
