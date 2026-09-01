@@ -69,12 +69,13 @@ h1 em{font-style:normal;color:var(--rose)}
 footer{text-align:center;padding:45px 20px 65px;color:#906b76;font-size:12px}.footer-heart{color:var(--rose);font-size:18px}
 
 .wheel-container{padding:40px;text-align:center}
-.wheel-wrapper{position:relative;margin:0 auto 30px;width:280px;height:280px}
-.wheel{width:100%;height:100%;border-radius:50%;background:conic-gradient(#ff7f96 0deg 45deg,#ffb36b 45deg 90deg,#dca4f2 90deg 135deg,#7fc8d8 135deg 180deg,#f28aa8 180deg 225deg,#f5cf67 225deg 270deg,#9bd3a7 270deg 315deg,#f08c6d 315deg 360deg);box-shadow:0 0 20px rgba(232,93,117,.3),inset -4px -4px 8px rgba(0,0,0,.1);border:3px solid #fff;position:relative;transition:transform 0.1s}
-.wheel::before{content:"";position:absolute;width:12px;height:12px;background:#fff;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;box-shadow:0 0 8px rgba(0,0,0,.2)}
-.wheel-pointer{position:absolute;top:-15px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:20px solid var(--rose);z-index:10;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
-.wheel-labels{position:absolute;width:100%;height:100%;font-weight:700;font-size:11px;color:#fff}
-.wheel-label{position:absolute;transform-origin:140px 140px;width:140px;height:140px;display:flex;align-items:center;justify-content:center;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.wheel-wrapper{position:relative;margin:0 auto 40px;width:300px;height:300px}
+.wheel{width:100%;height:100%;border-radius:50%;background:conic-gradient(#ff7f96 0deg 45deg,#ffb36b 45deg 90deg,#dca4f2 90deg 135deg,#7fc8d8 135deg 180deg,#f28aa8 180deg 225deg,#f5cf67 225deg 270deg,#9bd3a7 270deg 315deg,#f08c6d 315deg 360deg);box-shadow:0 0 30px rgba(232,93,117,.4);border:4px solid #fff;position:relative;transition:transform 0.05s linear;display:flex;align-items:center;justify-content:center}
+.wheel::before{content:"";position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;box-shadow:0 0 12px rgba(0,0,0,.3)}
+.wheel-pointer{position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:25px solid var(--rose);z-index:20;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+.wheel-text{position:absolute;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);white-space:nowrap}
+#spinBtn{transition:all 0.3s ease;font-size:16px}
+#spinBtn:disabled{opacity:0.6;cursor:not-allowed}
 .wheel-result{margin-top:25px;font-size:18px;font-weight:700;color:var(--rose);min-height:50px;display:flex;align-items:center;justify-content:center;animation:resultPop 0.5s ease}
 @keyframes resultPop{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
 .party-card{padding:50px;text-align:center;min-height:200px;position:relative;overflow:hidden}
@@ -368,27 +369,35 @@ const wheelOptions=[
  "Extra love & hugs 🫂",
  "Candlelit dinner 🕯️"
 ];
+
 let wheelRotation=0, isSpinning=false;
+
 function spinTheWheel(){
  if(isSpinning)return;
  isSpinning=true;
  const spinBtn=document.getElementById("spinBtn");
  spinBtn.disabled=true;
- const spins=Math.random()*8+8;
- const extraRotation=Math.random()*360;
- wheelRotation=spins*360+extraRotation;
+ spinBtn.textContent="Spinning...";
+ 
  const wheel=document.getElementById("wheelCanvas");
- wheel.style.transform=`rotate(${wheelRotation}deg)`;
+ const randomSpins=Math.floor(Math.random()*5)+5;
+ const randomDegree=Math.random()*360;
+ const finalRotation=randomSpins*360+randomDegree;
+ 
+ wheel.style.transform=`rotate(${finalRotation}deg)`;
+ 
  setTimeout(()=>{
-  const normalizedRotation=(360-(wheelRotation%360))%360;
-  const selectedIndex=Math.floor((normalizedRotation+22.5)/45)%8;
-  document.getElementById("wheelResult").textContent=wheelOptions[selectedIndex];
+  const normalizedRotation=finalRotation%360;
+  const selectedIndex=Math.floor(normalizedRotation/45)%8;
+  
+  document.getElementById("wheelResult").innerHTML=`<b>You landed on:</b><br>${wheelOptions[selectedIndex]}`;
+  toast(wheelOptions[selectedIndex]);
+  
   isSpinning=false;
   spinBtn.disabled=false;
+  spinBtn.textContent="SPIN THE WHEEL 🎡";
  },3500);
 }
-const wheel=document.getElementById("wheelCanvas");
-wheel.innerHTML=wheelOptions.map((opt,i)=>`<div class="wheel-label" style="transform:rotate(${i*45}deg) translateY(-70px)">${opt}</div>`).join("");
 
 function partyMode(){
  const area=document.getElementById("partyArea");
